@@ -1,3 +1,4 @@
+const axios = require('axios')
 module.exports = {
   /*
   ** Headers of the page
@@ -33,6 +34,16 @@ module.exports = {
           exclude: /(node_modules)/
         })
       }
+    }
+  },
+  generate: {
+    routes: function() {
+      return axios.get('https://renault.no/admin/wp-json/posts?type=bil')
+        .then((res) => {
+          return res.data.map((car) => {
+            return '/car/' + car.title
+          })
+        })
     }
   }
 }
